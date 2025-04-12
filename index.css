@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin-top: 100px;
+
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.calculator {
+  background-color: rgb(59, 57, 57);
+
+  height: 400px;
+  width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.display {
+  background-color: white;
+  height: 100px;
+  width: 250px;
+
+  padding: 10px;
+  align-content: baseline;
+}
+
+.numbersAndOperators {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+button {
+  border: none;
+  padding: 20px;
+
+  height: calc(100 / 15);
+}
