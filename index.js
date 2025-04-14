@@ -1,60 +1,87 @@
+let op = null;
+let secondOp = null;
+let n1 = null;
+let n2 = null;
+let equals = null;
+let currentInput = "0";
+
 let numbers = document.querySelectorAll(".number");
 let operators = document.querySelectorAll(".operator");
-function add(n1, n2) {
-  console.log(n1 + n2);
-}
-function subtract(n1, n2) {
-  console.log(n1 - n2);
-}
-function multiply(n1, n2) {
-  console.log(n1 * n2);
-}
-function divide(n1, n2) {
-  console.log(n1 / n2);
-}
+let equalsBtn = document.querySelector(".equals");
+let display = document.querySelector(".input");
+// preciso conseguir digitar n1 ate apertar um operador
+// e depois digitar n2 ate apertar outro operador
+// num antes de op vai pra n1, depois de op vai pra n2
+
+equalsBtn.addEventListener("click", makeOperation);
+
 function setNumbers() {
-  let num;
   numbers.forEach((number) => {
     number.addEventListener("click", () => {
-      console.log(num);
-      return (num = number.textContent);
+      if (op == null) {
+        if (n1 == null) {
+          n1 = number.textContent;
+        } else {
+          n1 += number.textContent;
+        }
+        display.textContent = n1;
+      } else {
+        if (n2 == null) {
+          n2 = number.textContent;
+        } else {
+          n2 += number.textContent;
+        }
+        display.textContent = n2;
+      }
+    });
+  });
+  setOp();
+}
+
+function resetAll() {
+  n1 = null;
+  n2 = null;
+  op = null;
+}
+
+function add(n1, n2) {
+  display.textContent = n1 + n2;
+}
+function subtract(n1, n2) {
+  display.textContent = n1 - n2;
+}
+function multiply(n1, n2) {
+  display.textContent = n1 * n2;
+}
+function divide(n1, n2) {
+  display.textContent = n1 / n2;
+}
+
+function setOp() {
+  operators.forEach((operator) => {
+    operator.addEventListener("click", () => {
+      op = operator.textContent;
+      display.textContent = op;
     });
   });
 }
 
-function operator() {
-  let n1;
-  let op;
-  let n2;
-  if (op == undefined) {
-    n1 += setNumbers();
-  }
-  if (n1 != "") {
-    operators.forEach((operator) => {
-      operator.addEventListener("click", () => {
-        op = operator.textContent;
-        console.log(op);
-        return;
-      });
-    });
-  }
-  if (op != undefined) {
-    console.log("xereca");
-    n2 = setNumbers();
-  }
+function makeOperation() {
   if (op == "+") {
-    n2 = window.prompt();
     add(parseInt(n1), parseInt(n2));
   } else if (op == "-") {
-    n2 = window.prompt();
     subtract(parseInt(n1), parseInt(n2));
   } else if (op == "*") {
-    n2 = window.prompt();
     multiply(parseInt(n1), parseInt(n2));
   } else if (op == "/") {
-    n2 = window.prompt();
     divide(parseInt(n1), parseInt(n2));
   }
+  resetAll();
 }
 
-operator();
+if (secondOp != null) {
+  console.log("res");
+  resetAll();
+}
+
+setNumbers();
