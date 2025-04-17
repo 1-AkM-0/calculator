@@ -52,6 +52,7 @@ function typeNumbers() {
     } else if (e.key == ".") {
       setDecimal();
     } else if (e.key === "Backspace") {
+      e.preventDefault();
       deleteNumber();
     }
   });
