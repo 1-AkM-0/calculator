@@ -3,7 +3,7 @@ let n1 = null;
 let n2 = null;
 let isDecimal = false;
 let isResultDecimal = false;
-let secondOp = null;
+
 let equals = null;
 const validInputs = "0123456789";
 const validOp = "+-/*";
@@ -16,10 +16,6 @@ const display = document.querySelector(".input");
 const clearBtn = document.querySelector(".clear");
 const backBtn = document.querySelector(".back");
 const decimalBtn = document.querySelector(".dot");
-const body = document.querySelector("body");
-// preciso conseguir digitar n1 ate apertar um operador
-// e depois digitar n2 ate apertar outro operador
-// num antes de op vai pra n1, depois de op vai pra n2
 
 equalsBtn.addEventListener("click", makeOperation);
 clearBtn.addEventListener("click", clearInput);
@@ -34,7 +30,7 @@ function typeNumbers() {
         if (n1 == null) {
           n1 = e.key;
         } else {
-          if ([n1].length <= LIMIT) {
+          if (n1.toString().length <= LIMIT) {
             n1 += e.key;
           }
         }
@@ -107,7 +103,7 @@ function clickNumbers() {
         if (n1 == null) {
           n1 = number.textContent;
         } else {
-          if ([n1].length <= LIMIT) {
+          if (n1.toString().length <= LIMIT) {
             n1 += number.textContent;
           }
         }
