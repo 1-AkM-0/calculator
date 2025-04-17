@@ -13,31 +13,45 @@
         <p class="input">0</p>
       </div>
       <div class="clearAndBack">
-        <button class="clear"></button>
-        <button class="back"></button>
+        <button class="clear">CLEAR</button>
+        <button class="back">DELETE</button>
       </div>
       <div class="numbersAndOperators">
         <div class="numbers">
-          <button class="number">7</button>
-          <button class="number">8</button>
-          <button class="number">9</button>
-          <button class="number">4</button>
-          <button class="number">5</button>
-          <button class="number">6</button>
-          <button class="number">1</button>
-          <button class="number">2</button>
-          <button class="number">3</button>
-          <button class="number">0</button>
-          <button class="comma">,</button>
-          <button class="equals">=</button>
-        </div>
-        <div class="operators">
-          <button class="operator">+</button>
-          <button class="operator">-</button>
-          <button class="operator">*</button>
-          <button class="operator">/</button>
+          <div class="calc-rows">
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button class="operator">+</button>
+          </div>
+          <div class="calc-rows">
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button class="operator">-</button>
+          </div>
+          <div class="calc-rows">
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button class="operator">*</button>
+          </div>
+          <div class="calc-rows">
+            <button class="number">0</button>
+            <button class="dot">.</button>
+            <button class="equals">=</button>
+            <button class="operator">/</button>
+          </div>
         </div>
       </div>
     </div>
   </body>
+  <script>
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        button.blur();
+      });
+    });
+  </script>
 </html>

@@ -1,8 +1,12 @@
 let op = null;
 let n1 = null;
 let n2 = null;
+let isDecimal = false;
+let isResultDecimal = false;
 let secondOp = null;
 let equals = null;
+const validInputs = "0123456789.";
+const validOp = "+-/*";
 const LIMIT = 25;
 
 let numbers = document.querySelectorAll(".number");
@@ -11,6 +15,8 @@ const equalsBtn = document.querySelector(".equals");
 const display = document.querySelector(".input");
 const clearBtn = document.querySelector(".clear");
 const backBtn = document.querySelector(".back");
+const decimalBtn = document.querySelector(".dot");
+const body = document.querySelector("body");
 // preciso conseguir digitar n1 ate apertar um operador
 // e depois digitar n2 ate apertar outro operador
 // num antes de op vai pra n1, depois de op vai pra n2
@@ -18,6 +24,19 @@ const backBtn = document.querySelector(".back");
 equalsBtn.addEventListener("click", makeOperation);
 clearBtn.addEventListener("click", clearInput);
 backBtn.addEventListener("click", deleteNumber);
+decimalBtn.addEventListener("click", setDecimal);
+
+function setDecimal() {
+  if (n2 == null && isDecimal == false && isResultDecimal == false) {
+    n1 += ".";
+    isDecimal = true;
+    isResultDecimal = true;
+  } else if (n2 != null && isDecimal == false) {
+    n2 += ".";
+    isDecimal = true;
+    isResultDecimal = true;
+  }
+}
 
 function updateDisplay(element) {
   display.textContent = element;
@@ -36,19 +55,21 @@ function deleteNumber() {
 function clearInput() {
   updateDisplay(0);
 
+  isDecimal = false;
+  isResultDecimal = false;
   n1 = null;
   n2 = null;
   op = null;
 }
 
-function setNumbers() {
+function clickNumbers() {
   numbers.forEach((number) => {
     number.addEventListener("click", () => {
       if (op == null) {
         if (n1 == null) {
           n1 = number.textContent;
         } else {
-          if (n1.length <= LIMIT) {
+          if ([n1].length <= LIMIT) {
             n1 += number.textContent;
           }
         }
@@ -69,7 +90,7 @@ function setNumbers() {
 }
 
 function resetAll(result) {
-  if (parseInt(result) == true || parseFloat(result) == true) {
+  if (parseInt(result) != NaN || parseFloat(result) != NaN) {
     n1 = result;
   } else {
     n1 = null;
@@ -94,33 +115,69 @@ function divide(n1, n2) {
   return n1 / n2;
 }
 
-function setOp() {
+function setOp(key) {
   operators.forEach((operator) => {
     operator.addEventListener("click", () => {
-      op = operator.textContent;
-      updateDisplay(op);
+      if (n1 != null) {
+        op = operator.textContent;
+        isDecimal = false;
+        updateDisplay(op);
+      }
     });
   });
+  if (n1 != null) {
+    op = key;
+    isDecimal = false;
+    updateDisplay(op);
+  }
 }
 
 function makeOperation() {
   let result = 0;
-  if (op == "+") {
-    result = add(parseInt(n1), parseInt(n2));
-  } else if (op == "-") {
-    result = subtract(parseInt(n1), parseInt(n2));
-  } else if (op == "*") {
-    result = multiply(parseInt(n1), parseInt(n2));
-  } else if (op == "/") {
-    result = divide(parseInt(n1), parseInt(n2));
+  if (n1 != null && n2 != null) {
+    if (op == "+") {
+      result = add(parseFloat(n1), parseFloat(n2));
+    } else if (op == "-") {
+      result = subtract(parseFloat(n1), parseFloat(n2));
+    } else if (op == "*") {
+      result = multiply(parseFloat(n1), parseFloat(n2));
+    } else if (op == "/") {
+      result = divide(parseFloat(n1), parseFloat(n2));
+    }
+    updateDisplay(result);
+    resetAll(result);
   }
-  updateDisplay(result);
-  resetAll(result);
 }
 
-if (secondOp != null) {
-  console.log("res");
-  resetAll();
+function typeNumbers() {
+  body.addEventListener("keypress", (e) => {
+    if (validInputs.includes(e.key)) {
+      if (op == null) {
+        if (n1 == null) {
+          n1 = e.key;
+        } else {
+          if ([n1].length <= LIMIT) {
+            n1 += e.key;
+          }
+        }
+        updateDisplay(n1);
+      } else {
+        if (n2 == null) {
+          n2 = e.key;
+        } else {
+          if (n2.length <= LIMIT) {
+            n2 += e.key;
+          }
+        }
+        updateDisplay(n2);
+      }
+    } else if (validOp.includes(e.key)) {
+      setOp(e.key);
+    } else if (e.key == "Enter") {
+      makeOperation();
+    }
+  });
 }
 
-setNumbers();
+typeNumbers();
+clickNumbers();

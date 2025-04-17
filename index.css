@@ -14,7 +14,7 @@ body {
 .calculator {
   background-color: rgb(59, 57, 57);
 
-  height: 400px;
+  height: 450px;
   width: 300px;
 
   display: flex;
@@ -30,15 +30,17 @@ body {
   padding: 10px;
   align-content: baseline;
 }
-
-.numbersAndOperators {
-  display: flex;
-  flex-wrap: wrap;
+.clearAndBack button {
+  padding: 10px 20px;
 }
 
-button {
-  border: none;
-  padding: 20px;
+.calc-rows {
+  display: flex;
+}
 
-  height: calc(100 / 15);
+.calc-rows button {
+  border: none;
+  border-radius: 30px;
+  padding: 20px;
+  width: 60px;
 }
