@@ -21,6 +21,11 @@ equalsBtn.addEventListener("click", makeOperation);
 clearBtn.addEventListener("click", clearInput);
 backBtn.addEventListener("click", deleteNumber);
 decimalBtn.addEventListener("click", setDecimal);
+document.querySelectorAll("button").forEach((btn) => {
+  btn.addEventListener("mouseup", () => {
+    btn.blur();
+  });
+});
 
 function typeNumbers() {
   window.addEventListener("keydown", (e) => {
