@@ -5,7 +5,7 @@ let isDecimal = false;
 let isResultDecimal = false;
 let secondOp = null;
 let equals = null;
-const validInputs = "0123456789.";
+const validInputs = "0123456789";
 const validOp = "+-/*";
 const LIMIT = 25;
 
@@ -26,6 +26,41 @@ clearBtn.addEventListener("click", clearInput);
 backBtn.addEventListener("click", deleteNumber);
 decimalBtn.addEventListener("click", setDecimal);
 
+function typeNumbers() {
+  window.addEventListener("keydown", (e) => {
+    console.log("tecla pressionada: " + e.key);
+    if (validInputs.includes(e.key)) {
+      if (op == null) {
+        if (n1 == null) {
+          n1 = e.key;
+        } else {
+          if ([n1].length <= LIMIT) {
+            n1 += e.key;
+          }
+        }
+        updateDisplay(n1);
+      } else {
+        if (n2 == null) {
+          n2 = e.key;
+        } else {
+          if (n2.length <= LIMIT) {
+            n2 += e.key;
+          }
+        }
+        updateDisplay(n2);
+      }
+    } else if (validOp.includes(e.key)) {
+      setOp(e.key);
+    } else if (e.key == "Enter") {
+      makeOperation();
+    } else if (e.key == ".") {
+      setDecimal();
+    } else if (e.key === "Backspace") {
+      deleteNumber();
+    }
+  });
+}
+typeNumbers();
 function setDecimal() {
   if (n2 == null && isDecimal == false && isResultDecimal == false) {
     n1 += ".";
@@ -43,12 +78,15 @@ function updateDisplay(element) {
 }
 
 function deleteNumber() {
-  if (n2 == null) {
-    n1 = n1.slice(0, -1);
-    updateDisplay(n1);
-  } else {
+  if (n1 != null && op == null && n1.toString() > 0) {
+    n1 = n1.toString().slice(0, -1);
+    updateDisplay(n1 || 0);
+  } else if (n2 != null && n2.length > 0) {
     n2 = n2.slice(0, -1);
-    updateDisplay(n2);
+    updateDisplay(n2 || 0);
+  } else if (op != null && n2 == null) {
+    op = null;
+    updateDisplay(n1 || 0);
   }
 }
 
@@ -149,35 +187,4 @@ function makeOperation() {
   }
 }
 
-function typeNumbers() {
-  body.addEventListener("keypress", (e) => {
-    if (validInputs.includes(e.key)) {
-      if (op == null) {
-        if (n1 == null) {
-          n1 = e.key;
-        } else {
-          if ([n1].length <= LIMIT) {
-            n1 += e.key;
-          }
-        }
-        updateDisplay(n1);
-      } else {
-        if (n2 == null) {
-          n2 = e.key;
-        } else {
-          if (n2.length <= LIMIT) {
-            n2 += e.key;
-          }
-        }
-        updateDisplay(n2);
-      }
-    } else if (validOp.includes(e.key)) {
-      setOp(e.key);
-    } else if (e.key == "Enter") {
-      makeOperation();
-    }
-  });
-}
-
-typeNumbers();
 clickNumbers();
